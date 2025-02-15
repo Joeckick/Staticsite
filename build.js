@@ -2,11 +2,21 @@ const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
 const frontMatter = require('front-matter');
+const Handlebars = require('handlebars');
 
 // Configure marked for security
 const markdown = new marked.Marked({
     headerIds: false,
     mangle: false
+});
+
+// Register Handlebars helpers
+Handlebars.registerHelper('formatDate', function(date) {
+    return new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 });
 
 // Ensure build directory exists
@@ -18,59 +28,33 @@ fs.ensureDirSync('dist/js');
 // Copy static assets
 fs.copySync('src', 'dist', {
     filter: (src) => {
-        return !src.includes('/content/');
+        return !src.includes('/content/') && !src.includes('/templates/');
     }
 });
 
-// Create HTML template
-const createHTML = (content, metadata = {}) => {
-    const title = metadata.title || 'Your Website';
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title}</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="/" class="logo">Your Site</a>
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/blog">Blog</a>
-                <a href="/about">About</a>
-                <a href="/faq">FAQ</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <article class="content">
-            ${content}
-        </article>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
-    </footer>
-
-    <script src="/js/main.js"></script>
-</body>
-</html>`;
+// Load templates
+const loadTemplate = (templatePath) => {
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    return Handlebars.compile(templateContent);
 };
 
 // Process Markdown files
-const processMarkdown = async (sourcePath, targetPath) => {
+const processMarkdown = async (sourcePath, targetPath, templateName) => {
     const files = await fs.readdir(sourcePath);
+    const template = loadTemplate(`src/templates/${templateName}`);
     
     for (const file of files) {
         if (path.extname(file) === '.md') {
             const content = await fs.readFile(path.join(sourcePath, file), 'utf-8');
             const { attributes, body } = frontMatter(content);
             const htmlContent = markdown.parse(body);
-            const fullHTML = createHTML(htmlContent, attributes);
+            
+            const templateData = {
+                ...attributes,
+                content: htmlContent
+            };
+            
+            const fullHTML = template(templateData);
             
             const targetFile = path.join(
                 targetPath,
@@ -87,12 +71,12 @@ async function build() {
     try {
         // Process blog posts
         if (fs.existsSync('src/content/blog')) {
-            await processMarkdown('src/content/blog', 'dist/blog');
+            await processMarkdown('src/content/blog', 'dist/blog', 'blog-post.html');
         }
 
         // Process pages
         if (fs.existsSync('src/content/pages')) {
-            await processMarkdown('src/content/pages', 'dist');
+            await processMarkdown('src/content/pages', 'dist', 'page.html');
         }
 
         console.log('Build completed successfully!');

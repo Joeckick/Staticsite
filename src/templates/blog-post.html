@@ -3,25 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} | Your Blog</title>
+    <title>{{title}} | Build Apps with AI</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/" class="logo">Your Site</a>
+    <header class="site-header">
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/images/logo.svg" alt="Logo" width="40" height="40">
+            </a>
             <div class="nav-links">
-                <a href="/">Home</a>
                 <a href="/blog">Blog</a>
                 <a href="/about">About</a>
-                <a href="/faq">FAQ</a>
+                <a href="/faq">FAQs</a>
+                <a href="/login" class="nav-link-login">Login</a>
+                <a href="/start" class="button button-primary">START BUILDING</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <article class="blog-post">
+        <article class="blog-post container">
             <header class="post-header">
                 <h1>{{title}}</h1>
                 <div class="post-meta">
@@ -33,7 +39,7 @@
             </header>
             
             <div class="post-content">
-                {{content}}
+                {{{content}}}
             </div>
 
             {{#if tags}}
@@ -45,11 +51,17 @@
                 </div>
             </footer>
             {{/if}}
+
+            <div class="newsletter-section">
+                <script async data-uid="6f794916f6" src="https://fantastic-maker-3436.ck.page/6f794916f6/index.js"></script>
+            </div>
         </article>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2024 Your Website. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html> 

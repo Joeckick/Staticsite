@@ -3,40 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website</title>
+    <title>Build Apps with AI</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/" class="logo">Your Site</a>
+    <header class="site-header">
+        <nav class="container">
+            <a href="/" class="logo">
+                <img src="/images/logo.svg" alt="Logo" width="40" height="40">
+            </a>
             <div class="nav-links">
-                <a href="/">Home</a>
                 <a href="/blog">Blog</a>
                 <a href="/about">About</a>
-                <a href="/faq">FAQ</a>
+                <a href="/faq">FAQs</a>
+                <a href="/login" class="nav-link-login">Login</a>
+                <a href="/start" class="button button-primary">START BUILDING</a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <h1>Welcome to Your Website</h1>
-            <p>A simple and elegant website built with HTML, CSS, and JavaScript.</p>
+        <section class="hero container">
+            <div class="hero-content">
+                <div class="students-learning">
+                    <div class="avatar-stack">
+                        <div class="avatar" style="background-color: #0052FF"></div>
+                        <div class="avatar" style="background-color: #00875A"></div>
+                        <div class="avatar" style="background-color: #AE2A19"></div>
+                        <div class="avatar" style="background-color: #5243AA"></div>
+                        <div class="avatar" style="background-color: #FF991F"></div>
+                    </div>
+                    <span class="students-count">808 students learning</span>
+                </div>
+
+                <h1>Build Your Own<br>Apps with AI</h1>
+                <p class="hero-description">Double your productivity and save thousands of dollars by writing code to automate or enhance your work.</p>
+                <p class="hero-subtitle">Even if you have zero programming experience...</p>
+                
+                <a href="/start" class="button button-primary button-large">START BUILDING NOW →</a>
+            </div>
+
+            <div class="hero-video">
+                <div class="video-container">
+                    <img src="/images/video-poster.svg" alt="Watch the intro video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer;">
+                </div>
+            </div>
         </section>
 
-        <section class="featured-posts">
-            <h2>Latest Blog Posts</h2>
-            <div class="posts-grid">
-                <!-- Blog posts will be dynamically inserted here -->
+        <section class="cta-section">
+            <div class="container text-center">
+                <h2>In one hour you'll be texting a friend:</h2>
+                <p class="cta-quote">"Look what I built!"</p>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2024 Your Website. All rights reserved.</p>
+        </div>
     </footer>
-
-    <script src="/js/main.js"></script>
 </body>
 </html> 
